@@ -16,14 +16,13 @@ window.addEventListener("mousedown", function () {
                     gsap.to(
                         ".sol",
                         {
-                            
                             x:6700,
                             y:80,
-                            duration:3,
+                            duration:4,
                             ease:"circ.out",
                         }
                     )
+                }
             }
-        }
-    );
+        );
 });

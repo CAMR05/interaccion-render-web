@@ -18,7 +18,7 @@ body {
     height: 900px;
     border-radius: 50%;
     background-color: rgb(255, 136, 0);
-    opacity: 70%;
+    opacity: 65%;
 }
 .horizonte{
     position: absolute;
@@ -26,5 +26,5 @@ body {
     left: 0;
     width: 100%;
     height: 45%;
-    background:linear-gradient(to top,black,black,black,rgb(119, 119, 32), rgb(163, 107, 2));
+    background:linear-gradient(to top,black,black,black,rgb(119, 119, 32),rgb(119, 119, 32), rgb(163, 107, 2));
 }
