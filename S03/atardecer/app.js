@@ -1,6 +1,6 @@
 console.log("Atardecer");
 
-console.log(gsap);
+console.log(gsap); 
 
 
 window.addEventListener("mousedown", function () {
@@ -10,16 +10,16 @@ window.addEventListener("mousedown", function () {
                 y:-900,
                 x:innerWidth/2,
                 
-                duration:2, //segundos
-                ease:"circ.in",
+                duration:3, //segundos
+                ease:"power1.out",
                 onComplete:function() {
                     gsap.to(
                         ".sol",
                         {
                             x:6700,
                             y:80,
-                            duration:4,
-                            ease:"circ.out",
+                            duration:3,
+                            ease:"power1.in",
                         }
                     )
                 }
