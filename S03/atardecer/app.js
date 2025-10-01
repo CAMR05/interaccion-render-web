@@ -8,21 +8,21 @@ window.addEventListener("mousedown", function () {
         tl.to(
             ".sol",
             {
-                y:-500,
+                y:-400,
                 x:innerWidth/2 - 100,
                 
-                duration:3, //segundos
-                ease:"power2.inOut",
+                duration:4, //segundos
+                ease:"power1.in",
                 }
         );
                     tl.to(
                         ".sol",
                         {
-                            x:1500,
-                            y:80,
-                            duration:3,
-                            ease:"power2.inOut",
+                            x:innerWidth - 350,
+                            y:30,
+                            duration:4,
+                            ease:"power1.out",
                         },
-                   "-=0.7" );
+                   "-=0.4" );
                 
 });
