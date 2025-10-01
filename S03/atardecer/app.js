@@ -7,19 +7,19 @@ window.addEventListener("mousedown", function () {
         gsap.to(
             ".sol",
             {
-                y:-900,
-                x:innerWidth/2,
+                y:-500,
+                x:innerWidth/2 - 100,
                 
-                duration:3, //segundos
-                ease:"power1.out",
+                duration:2, //segundos
+                ease:"power2.inOut",
                 onComplete:function() {
                     gsap.to(
                         ".sol",
                         {
-                            x:6700,
+                            x:1500,
                             y:80,
-                            duration:3,
-                            ease:"power1.in",
+                            duration:2,
+                            ease:"power2.in",
                         }
                     )
                 }

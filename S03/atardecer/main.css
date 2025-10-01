@@ -14,8 +14,8 @@ body {
     position: absolute;
     top: 50%;
     left: 0;
-    width: 900px;
-    height: 900px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background-color: rgb(255, 136, 0);
     opacity: 65%;
