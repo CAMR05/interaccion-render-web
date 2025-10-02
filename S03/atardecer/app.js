@@ -4,25 +4,23 @@ console.log(gsap);
 
 
 window.addEventListener("mousedown", function () {
-    const tl = gsap.timeline();
-        tl.to(
-            ".sol",
-            {
-                y:-400,
-                x:innerWidth/2 - 100,
-                
-                duration:4, //segundos
-                ease:"power1.in",
-                }
-        );
-                    tl.to(
-                        ".sol",
-                        {
-                            x:innerWidth - 350,
-                            y:30,
-                            duration:4,
-                            ease:"power1.out",
-                        },
-                   "-=0.4" );
-                
+    
+    gsap.to(".sol", {
+        duration: 5, // Duración total del viaje
+        ease: "power1.inOut", // El ease general es lineal, el control está en cada keyframe
+        motionPath: {
+           
+
+            path: [
+                 
+            // Primer tramo: subir
+            {x: innerWidth/2 - 200,y: -300,},
+            // Segundo tramo: moverse horizontalmente
+            {x: innerWidth/2, y: -300,},
+            // Tercer tramo: bajar
+            {x:innerWidth - 350,y: 10,}
+            ]
+        }
+        
+    });
 });
