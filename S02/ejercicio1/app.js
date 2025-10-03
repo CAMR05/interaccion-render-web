@@ -63,8 +63,6 @@ window.addEventListener("mousedown", function (eventData) {
  ctx.beginPath();
     for (let i = 0; i < 11; i++) {
         ctx.ellipse(canvas.width/2, 250 + i * 30, 150, 150, 0, 0, Math.PI * 2);
-
-        ctx.fill();
         ctx.stroke();
 }
 

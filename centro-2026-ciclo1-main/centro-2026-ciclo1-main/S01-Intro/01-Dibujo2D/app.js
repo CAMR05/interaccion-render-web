@@ -8,7 +8,7 @@ console.log(canvas);
 //2. Definir si es 2D o 3D.
 const ctx = canvas.getContext('2d');
 
-
+ctx.beginPath();
 //3.Definir los estilos de la línea.
 ctx.strokeStyle ="#ff0000";
 ctx.lineWidth = 2;
@@ -37,8 +37,9 @@ ctx.fillStyle = "#00ff00";
 ctx.rect(450,10,300,100);
 
 //8. Renderizar el rectángulo
-//ctx.fill();
 ctx.stroke();
+ctx.fill();
+
 
 // Sintaxis de elipse o círculo
 ctx.beginPath();
@@ -49,7 +50,7 @@ ctx.fillStyle = "#000";
 
 //10. Definir el círculo
 //ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle);
-ctx.ellipse(50, 150, 30, 130, 0, 0, Math.PI * 1.5);
+ctx.ellipse(300, 350, 30, 130, 0, 0, Math.PI * 1.5);
 
 //11. Renderizar el círculo
 ctx.fill();
