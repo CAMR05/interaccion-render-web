@@ -1,4 +1,4 @@
-console.log("Sesión 05. Ejercicio 01: Geometrías)");
+console.log("Sesión 05. Ejercicio 01: Geometrías");
 console.log(THREE);
 
 //Configurar nuestro canvas

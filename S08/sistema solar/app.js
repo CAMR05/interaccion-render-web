@@ -1,119 +1,126 @@
 console.log("S08. Sistema Solar");
-console.log(gsap);
-console.log(THREE);
-gsap.registerPlugin(MotionPathPlugin);
+        gsap.registerPlugin(MotionPathPlugin);
 
-const canvas = document.getElementById("lienzo");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+        // --- 1. CONFIGURACIÓN INICIAL ---
+        const canvas = document.getElementById("lienzo");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 1000);
 
+        // MEJORA: Posición de cámara para una mejor vista
+        camera.position.set(0, 20, 45); 
+        camera.lookAt(0, 0, 0);
 
+        scene.background = new THREE.Color("#130118");
+        
+        // El array donde guardaremos los Meshes de los planetas
+        const planetas = [];
 
-camera.position.z = 25;
+        // --- 2. DATOS DE LOS PLANETAS ---
+        const datosPlanetas = [
+            { nombre: 'Mercurio', textura: './texturas/texturas-sistema-solar/mercurio.jpg', tamaño: 0.38, radioOrbita: 5, velocidad: 1.6 },
+            { nombre: 'Venus',    textura: './texturas/texturas-sistema-solar/venus.jpg',    tamaño: 0.95, radioOrbita: 7, velocidad: 1.2 },
+            { nombre: 'Tierra',   textura: './texturas/texturas-sistema-solar/tierra.jpg',   tamaño: 1.00, radioOrbita: 9, velocidad: 1.0 },
+            { nombre: 'Marte',    textura: './texturas/texturas-sistema-solar/marte.jpg',    tamaño: 0.53, radioOrbita: 11, velocidad: 0.8 },
+            { nombre: 'Júpiter',  textura: './texturas/texturas-sistema-solar/jupiter.jpg',  tamaño: 3.0, radioOrbita: 15, velocidad: 0.4 },
+            { nombre: 'Saturno',  textura: './texturas/texturas-sistema-solar/saturno.jpg',  tamaño: 2.5, radioOrbita: 19, velocidad: 0.3 },
+            { nombre: 'Urano',    textura: './texturas/texturas-sistema-solar/urano.jpg',    tamaño: 1.5, radioOrbita: 22, velocidad: 0.2 },
+            { nombre: 'Neptuno',  textura: './texturas/texturas-sistema-solar/neptuno.jpg',  tamaño: 1.4, radioOrbita: 25, velocidad: 0.15 }
+        ];
 
-// Geometría para el sol. Es mejor definirla aquí.
-const solGeometry = new THREE.SphereGeometry(1.5, 32, 32); 
+        const textureLoader = new THREE.TextureLoader();
+        let mesh1; // Variable para el sol
 
-scene.background = new THREE.Color("#25012e");
-
-const planeGeometry = new THREE.PlaneGeometry(50, 50);
-const planeMaterial = new THREE.MeshBasicMaterial({ color: "#25012e" });
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.rotation.x = -Math.PI / 2;
-plane.position.y = -6;
-scene.add(plane);
-
-const planetas = [];
-
-
-const textureLoader = new THREE.TextureLoader();
-let matcapSol, matcapPlanetas;
-let mesh1;
-
-console.log("Iniciando carga de la textura del sol...");
-
-textureLoader.load(
-    './texturas/matcap2.png',
-    // 1. Bloque de ÉXITO para el sol
-    function (texture) {
-        console.log("¡ÉXITO! Textura del sol CARGADA.");
-        matcapSol = new THREE.MeshMatcapMaterial({ matcap: texture });
-        mesh1 = new THREE.Mesh(solGeometry, matcapSol);
-        scene.add(mesh1);
-        mesh1.position.set(0, 0, 0);
-
-        console.log("Iniciando carga de la textura de los planetas...");
+        // --- 3. CARGA DE TEXTURAS Y CREACIÓN DE OBJETOS ---
+        console.log("Iniciando carga de la textura del sol...");
         textureLoader.load(
-            './texturas/textura-provicional-planetas.png',
-            // 2. Bloque de ÉXITO para los planetas
-            function (texturePlanetas) {
-                console.log("¡ÉXITO! Textura de planetas CARGADA.");
-                matcapPlanetas = new THREE.MeshMatcapMaterial({ matcap: texturePlanetas });
+            './texturas/matcap2.png', // Textura del Sol
+            function (textureSol) {
+                console.log("Éxito: Textura del sol cargada.");
+                const solGeometry = new THREE.SphereGeometry(2.5, 32, 32);
+                const solMaterial = new THREE.MeshMatcapMaterial({ matcap: textureSol });
+                mesh1 = new THREE.Mesh(solGeometry, solMaterial);
+                scene.add(mesh1);
 
-                const numeroDePlanetas = 8;
-                for (let i = 0; i < numeroDePlanetas; i++) {
-                    const planetaGeometry = new THREE.SphereGeometry(Math.random() * 0.7 + 0.1, 32, 32);
-                    const planeta = new THREE.Mesh(planetaGeometry, matcapPlanetas);
-                    const radioOrbita = (i + 1) * 2.5 + 2;
-                    const anguloInicial = Math.random() * Math.PI * 2;
-                    planeta.position.x = radioOrbita * Math.cos(anguloInicial);
-                    planeta.position.z = radioOrbita * Math.sin(anguloInicial);
-                    planeta.userData.radioOrbita = radioOrbita;
-                    planeta.userData.velocidad = (Math.random() * 0.5 + 0.2);
-                    scene.add(planeta);
-                    planetas.push(planeta);
-                }
-                
-                console.log("Todo cargado. Iniciando animación...");
-                animate(); // La animación solo empieza si todo lo anterior tuvo éxito.
+                console.log("Iniciando carga de las texturas de los planetas...");
+                const rutasTexturas = datosPlanetas.map(p => p.textura);
+                const promesasDeCarga = rutasTexturas.map(ruta => textureLoader.loadAsync(ruta));
+
+                Promise.all(promesasDeCarga).then(texturasCargadas => {
+                    console.log("Éxito: Todas las texturas de los planetas han sido cargadas.");
+
+                    datosPlanetas.forEach((infoPlaneta, i) => {
+                        const planetaMaterial = new THREE.MeshMatcapMaterial({
+                            matcap: texturasCargadas[i]
+                        });
+                        const planetaGeometry = new THREE.SphereGeometry(infoPlaneta.tamaño, 32, 32);
+                        const planeta = new THREE.Mesh(planetaGeometry, planetaMaterial);
+                        planeta.name = infoPlaneta.nombre;
+
+                        const radioOrbita = infoPlaneta.radioOrbita;
+                        const anguloInicial = Math.random() * Math.PI * 2;
+                        planeta.position.x = radioOrbita * Math.cos(anguloInicial);
+                        planeta.position.z = radioOrbita * Math.sin(anguloInicial);
+                        
+                        planeta.userData.radioOrbita = radioOrbita;
+                        planeta.userData.velocidad = infoPlaneta.velocidad;
+                        
+                        scene.add(planeta);
+                        planetas.push(planeta);
+                        
+                        console.log(`Planeta ${planeta.name} creado.`);
+                    });
+
+                    console.log("Sistema solar completo. Iniciando animación.");
+                    // ESTA es la llamada correcta a animate()
+                    animate();
+
+                }).catch(error => {
+                    console.error("Error al cargar una o más texturas de los planetas. Revisa las rutas en la consola (Network tab).", error);
+                });
             },
             undefined,
-            // 3. Bloque de ERROR para los planetas
             function (error) {
-                console.error("ERROR AL CARGAR LA TEXTURA DE LOS PLANETAS. Revisa la ruta y el nombre del archivo.", error);
+                console.error("Error crítico al cargar la textura del sol.", error);
             }
         );
-    },
-    undefined,
-    // 4. Bloque de ERROR para el sol
-    function (error) {
-        console.error("ERROR AL CARGAR LA TEXTURA DEL SOL. ¿La ruta './texturas/matcap2.png' es correcta? ¿Estás usando Live Server?", error);
-    }
-);
 
+        // --- 4. RENDERER Y BUCLE DE ANIMACIÓN ---
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setSize(canvas.width, canvas.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// Renderer y el resto del código se mantienen igual...
-const renderer = new THREE.WebGLRenderer({ canvas: canvas });
-renderer.setSize(canvas.width, canvas.height);
-window.addEventListener("resize", function () {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    renderer.setSize(canvas.width, canvas.height);
-    camera.aspect = canvas.width / canvas.height;
-    camera.updateProjectionMatrix();
-    renderer.render(scene, camera);
-});
+        const clock = new THREE.Clock();
 
-renderer.render(scene, camera);
-const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
 
-function animate() {
-    requestAnimationFrame(animate);
-    const elapsedTime = clock.getElapsedTime();
+            if (mesh1) {
+                mesh1.rotation.y += 0.002;
+            }
 
-    if (mesh1) {
-        mesh1.rotation.y += 0.005;
-    }
+            planetas.forEach(planeta => {
+                planeta.rotation.y += 0.01; 
+                const radio = planeta.userData.radioOrbita;
+                const velocidad = planeta.userData.velocidad;
+                planeta.position.x = radio * Math.cos(elapsedTime * velocidad);
+                planeta.position.z = radio * Math.sin(elapsedTime * velocidad);
+            });
 
-    planetas.forEach(planeta => {
-        planeta.rotation.y += 0.01;
-        planeta.position.x = planeta.userData.radioOrbita * Math.cos(elapsedTime * planeta.userData.velocidad);
-        planeta.position.z = planeta.userData.radioOrbita * Math.sin(elapsedTime * planeta.userData.velocidad);
-    });
+            renderer.render(scene, camera);
+        }
 
-    renderer.render(scene, camera);
-}
-animate();
+        // --- 5. MANEJO DEL CAMBIO DE TAMAÑO DE LA VENTANA ---
+        window.addEventListener("resize", function () {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            camera.aspect = canvas.width / canvas.height;
+            camera.updateProjectionMatrix();
+            
+            renderer.setSize(canvas.width, canvas.height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
