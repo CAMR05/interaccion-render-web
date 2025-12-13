@@ -1,7 +1,8 @@
 /* Import fonts */
-@font-face {
-	font-family: 'Pangram';
-	src: url('assets/PPPlayground-Light.otf');
+.fascinate-inline-regular {
+  font-family: "Fascinate Inline", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 /* Normalize */
@@ -9,7 +10,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Pangram', sans-serif;
+	font-family: 'Fascinate Inline';
 }
 
 ul, ol, li {
@@ -18,14 +19,14 @@ ul, ol, li {
 
 /* Canvas style to prevent canvas overflow when filling entire screen. This is needed because of normalize.css library that codepen uses. */
 body {
-	background: #c5cdca;
+	background: #941600;
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
-	color: #fe0;
+	color: rgb(0, 0, 0);
 }
 
 /* Page styles */
@@ -36,10 +37,10 @@ body {
 	top: 0; bottom: 0;
 	left: 0; right: 0;
 	text-align: center;
-	font-size: min(80vh, 56vw);
+	font-size: min(50vh, 56vw);
 	height: calc(min(80vh, 56vw) * 1.23);
 	font-weight: 300;
-	/* text-shadow: 10px 2px 15px rgba(255,200,0, 0.5); */
+	text-shadow: 10px 2px 15px rgba(0, 168, 36, 0.568); 
 }
 
 #heading span {
@@ -52,6 +53,8 @@ body {
 #heading span:nth-child(3) { z-index: 7; }
 #heading span:nth-child(4) { z-index: 9; }
 #heading span:nth-child(5) { z-index: 1; }
+
+
 
 nav {
 	z-index: 99;
@@ -86,7 +89,8 @@ footer ul {
 li {
 	cursor: pointer;
 	font-family: sans-serif;
-	color: #202020;
+	font-weight: 700;
+	color: #ffffff;
 }
 
 li:hover {

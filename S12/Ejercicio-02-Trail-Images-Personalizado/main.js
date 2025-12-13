@@ -24,12 +24,12 @@ var lastPos = {
     6.-Reiniciar el índice al alcanzar el máximo.
 */
 var imageList = [
-    "./assets/p1.jpg",
-    "./assets/p2.jpg",
-    "./assets/p3.jpg",
-    "./assets/p4.jpg",
-    "./assets/p5.jpg",
-    "./assets/p6.jpg",
+    "./assets/avengers.jpg",
+    "./assets/dc.jpg",
+    "./assets/starwars.jpg",
+    "./assets/videogames.jpg",
+    "./assets/bryan-adams.png",
+    "./assets/nathan-drake.jpg",
 ];
 var index = 0;
 // 01. Renderizar 1 imagen.
@@ -73,7 +73,7 @@ function createFloatingImage(posX, posY){
             opacity: 0,
             y: "30px",
             duration: 1,
-            ease:"power3.out",
+            ease:"bounce.inOut",
             onComplete: function(){
                 img.remove();
             }
